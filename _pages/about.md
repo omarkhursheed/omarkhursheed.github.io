@@ -8,7 +8,7 @@ redirect_from:
   - /about.html
 ---
 
-I'm a Master's student in Computer Science at [UMass Amherst](https://www.cics.umass.edu/). I am interested in Natural Language Processing and Machine Learning, and particularly in their application to computational social science and the understanding of fictional narratives. I am currently advised by Professor[Mohit Iyyer](https://www.cics.umass.edu/people/rahman-tauhidur). 
+I'm a Master's student in Computer Science at [UMass Amherst](https://www.cics.umass.edu/). I am interested in Natural Language Processing and Machine Learning, and particularly in their application to computational social science and the understanding of fictional narratives. I am currently advised by Professor [Mohit Iyyer](https://www.cics.umass.edu/people/rahman-tauhidur). 
 
 I graduated in 2019 from Aligarh Muslim University, where I studied Computer Engineering, co-founded [AMU-OSS](https://amu-oss.github.io/), a club for open-source enthusiasts, and spent most of my free time at the University Debating and Literary Club, where I ran the performance poetry forum for two years. I was advised at AMU by Mr. [Asad Mohammed Khan](https://www.amu.ac.in/dshowfacultydata.jsp?did=30&eid=10059304) and Dr. [Rashid Ali](https://www.amu.ac.in/dshowfacultydata.jsp?did=30&eid=3011)
 
