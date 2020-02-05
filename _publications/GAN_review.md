@@ -3,7 +3,7 @@ title: "Generative Adversarial Networks: A Survey of Techniques and Methods"
 collection: publications
 permalink: https://link.springer.com/chapter/10.1007/978-3-030-24643-3_58
 excerpt: 
-date: 2019-09-15
+date: 
 venue: 'Proceeding of the International Conference on Computer Networks, Big Data and IoT (ICCBI - 2018)'
 paperurl:
 ---
