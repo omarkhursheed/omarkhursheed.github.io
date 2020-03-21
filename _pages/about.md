@@ -14,4 +14,4 @@ I graduated in 2019 from Aligarh Muslim University, where I studied Computer Eng
 
 In my free time, I'm a literature enthusiast, and a fantasy fan in particular, diving deep into the epic worlds created by [Steven Erikson](https://malazan.fandom.com/wiki/Malazan_Book_of_the_Fallen) and [Neil Gaiman](https://en.wikipedia.org/wiki/The_Sandman_(Vertigo)). A fantasy short story by me can be found [here](https://medium.com/@omarkhursheed/the-ashaar-a-short-fantasy-story-3816a6eab7bb).  
 
-Update: I'll be joining Alexa Edge ML Team at Amazon in Sunnyvale as an Applied Scientist Intern this summer
+Update: I'll be joining  the Alexa Edge ML Team at Amazon in Sunnyvale as an Applied Scientist Intern for Summer 2020.
