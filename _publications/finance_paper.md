@@ -2,7 +2,7 @@ title: "Stock Market Prediction Using a Hybrid Model"
 collection: publications
 permalink: 
 excerpt: 
-date: 2019-12-19
+date: 2019-12-19 00:00:00
 venue: 'Symposium on Machine Learning, Metaheuristics Algorithms and Applications (SoMMA - 2019)'
 paperurl:
 ---
