@@ -23,9 +23,8 @@ In my free time, I'm a literature enthusiast, and a fantasy fan in particular, d
 ## Updates:
 - January 2021 - I will begin working at Amazon as an Applied Scientist with Alexa Edge ML in Sunnyvale, CA
 - December 2020 - I graduated from UMass Amherst with an MS in Computer Science with a Data Science Concentration
-- November 2020 - New [paper](https://www.aclweb.org/anthology/2020.nlpcss-1.23/) on analysing gender bias in narrative tropes with [Dhruvil Gala](https://www.linkedin.com/in/dhruvilgala/), Hannah Lerner, [Mohit Iyyer](https://people.cs.umass.edu/~miyyer/), and [Brendan O'Connor](http://brenocon.com/) at the  at EMNLP 2020
+- November 2020 - New [paper](https://www.aclweb.org/anthology/2020.nlpcss-1.23/) on analysing gender bias in narrative tropes with [Dhruvil Gala](https://www.linkedin.com/in/dhruvilgala/), Hannah Lerner, [Mohit Iyyer](https://people.cs.umass.edu/~miyyer/), and [Brendan O'Connor](http://brenocon.com/) at the NLP+CSS workshop at EMNLP 2020
 - October 2020 - My work as an intern at Amazon about [Convolutional Recurrent Networks for Wakeword Detection](https://arxiv.org/abs/2011.12941) is now available to view!
 - May 2020 - I started an Applied Scientist Internship at Amazon with Alexa Edge ML 
 - August 2019 - I started a MS in Computer Science at UMass Amherst
-- July 2019 - I graduated with a Bachelor's degree in Computer Engineering from Aligarh Muslim University  
-
+- July 2019 - I graduated with a Bachelor's degree in Computer Engineering from Aligarh Muslim University
