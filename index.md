@@ -2,7 +2,12 @@
 layout: default
 ---
 
-# Mohammad Omar Khursheed
+<div style="display: flex; align-items: flex-start; gap: 40px; margin-bottom: 40px;">
+  <img src="images/profile.jpg" alt="Mohammad Omar Khursheed" style="width: 200px; height: 200px; object-fit: cover; border-radius: 5px;">
+  <div>
+    <h1 style="margin-top: 0;">Mohammad Omar Khursheed</h1>
+  </div>
+</div>
 
 I am an Applied Scientist at Amazon, where I work on developing efficient machine learning systems for speech recognition. My research focuses on creating robust and fair deep learning architectures for resource-constrained environments, with a particular interest in the intersection of model efficiency and speech representations.
 
@@ -14,4 +19,8 @@ My work explores how to optimally balance information preservation with constrai
 - Machine Learning Fairness
 - Self-supervised Speech Representation Learning
 
-<div class="links">[View Publications](/publications) | [GitHub](https://github.com/omarkhursheed) | [LinkedIn]</div>(https://linkedin.com/in/mkhursheed)
+<div class="links">
+  <a href="/publications">View Publications</a> |
+  <a href="https://github.com/omarkhursheed">GitHub</a> |
+  <a href="https://linkedin.com/in/mkhursheed">LinkedIn</a>
+</div>
