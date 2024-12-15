@@ -5,25 +5,17 @@ url: https://omarkhursheed.github.io
 baseurl: ""
 
 # Theme settings
-remote_theme: pages-themes/minimal@v0.2.0
+theme: jekyll-theme-minimal
 plugins:
-- jekyll-remote-theme
-- jekyll-feed
-- jekyll-seo-tag
+  - jekyll-feed
+  - jekyll-seo-tag
 
+show_downloads: false
+
+# Author settings
 author:
-  name: "Mohammad Omar Khursheed"
-  avatar: "profile.jpg"
-  bio: "Applied Scientist at Amazon working on machine learning solutions for speech recognition and keyword spotting"
-  location: "Sunnyvale"
-  employer: "Amazon"
-  email: "omarkhu@gmail.com"
-  github: "omarkhursheed"
-  linkedin: "mkhursheed"
+  name: Mohammad Omar Khursheed
+  email: omarkhu@gmail.com
 
-defaults:
-  - scope:
-      path: ""
-      type: pages
-    values:
-      layout: default
+github:
+  is_project_page: false
