@@ -2,10 +2,10 @@
 layout: default
 ---
 
-<div style="display: flex; align-items: flex-start; gap: 40px; margin-bottom: 40px;">
-  <img src="images/profile.jpg" alt="Mohammad Omar Khursheed" style="width: 200px; height: 200px; object-fit: cover; border-radius: 5px;">
+<div class="profile-container">
+  <img src="images/profile.jpg" alt="Mohammad Omar Khursheed" class="profile-image">
   <div>
-    <h1 style="margin-top: 0;">Mohammad Omar Khursheed</h1>
+    <h1>Mohammad Omar Khursheed</h1>
   </div>
 </div>
 
@@ -19,8 +19,6 @@ My work explores how to optimally balance information preservation with constrai
 - Machine Learning Fairness
 - Self-supervised Speech Representation Learning
 
-<div class="links">
-  <a href="/publications">View Publications</a> |
-  <a href="https://github.com/omarkhursheed">GitHub</a> |
-  <a href="https://linkedin.com/in/mkhursheed">LinkedIn</a>
+<div class="bottom-links">
+<a href="/publications">View Publications</a> | <a href="https://github.com/omarkhursheed">GitHub</a> | <a href="https://linkedin.com/in/mkhursheed">LinkedIn</a>
 </div>

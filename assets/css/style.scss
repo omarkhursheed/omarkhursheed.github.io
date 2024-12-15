@@ -25,8 +25,23 @@ nav a:hover {
   text-decoration: underline;
 }
 
+.profile-container {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 40px;
+  align-items: flex-start;
+}
+
+.profile-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
 h1 {
   font-size: 2.5em;
+  margin-top: 0;
   margin-bottom: 1em;
   color: #1a1a1a;
 }
@@ -44,6 +59,7 @@ p {
 
 ul {
   padding-left: 20px;
+  margin-bottom: 2em;
 }
 
 li {
@@ -51,27 +67,27 @@ li {
   font-size: 1.1em;
 }
 
-.links {
+.bottom-links {
   margin-top: 2em;
 }
 
-.links a {
-  margin-right: 20px;
+.bottom-links a {
   color: #0366d6;
   text-decoration: none;
-  font-weight: 500;
 }
 
-.links a:hover {
+.bottom-links a:hover {
   text-decoration: underline;
 }
 
 @media (max-width: 600px) {
-  body {
-    padding: 20px;
+  .profile-container {
+    flex-direction: column;
+    gap: 20px;
   }
   
-  h1 {
-    font-size: 2em;
+  .profile-image {
+    width: 150px;
+    height: 150px;
   }
 }
