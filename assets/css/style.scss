@@ -1,0 +1,55 @@
+---
+---
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  color: #24292e;
+}
+
+h1 {
+  font-size: 2.5em;
+  margin-bottom: 0.5em;
+  color: #1a1a1a;
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 2em 0;
+}
+
+.nav-list li {
+  display: inline-block;
+  margin-right: 2em;
+}
+
+.nav-list a {
+  text-decoration: none;
+  color: #0366d6;
+  font-weight: 500;
+}
+
+.nav-list a:hover {
+  text-decoration: underline;
+}
+
+.footer {
+  margin-top: 4em;
+  padding-top: 2em;
+  border-top: 1px solid #eaecef;
+  font-size: 0.9em;
+  color: #586069;
+}
+
+.experience-list {
+  list-style: none;
+  padding: 0;
+}
+
+.experience-list li {
+  margin-bottom: 1em;
+}
