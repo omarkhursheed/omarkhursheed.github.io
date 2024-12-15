@@ -14,4 +14,4 @@ My work explores how to optimally balance information preservation with constrai
 - Machine Learning Fairness
 - Self-supervised Speech Representation Learning
 
-[View Publications](/publications) | [GitHub](https://github.com/omarkhursheed) | [LinkedIn](https://linkedin.com/in/mkhursheed)
+<div class="links">[View Publications](/publications) | [GitHub](https://github.com/omarkhursheed) | [LinkedIn]</div>(https://linkedin.com/in/mkhursheed)
