@@ -8,7 +8,7 @@ baseurl: ""
 # Site Author
 author:
   name: "Mohammad Omar Khursheed"
-  avatar: "profile.png"  # We'll add your photo later
+  avatar: "profile.jpg"  # We'll add your photo later
   bio: "Applied Scientist at Amazon working on machine learning solutions for speech recognition and keyword spotting"
   location: "Massachusetts"
   employer: "Amazon"
