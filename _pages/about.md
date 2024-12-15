@@ -8,25 +8,14 @@ redirect_from:
   - /about.html
 ---
 
-I'm an Applied Scientist at Amazon, working on machine learning solutions for speech recognition and keyword spotting. My research focuses on developing efficient deep learning architectures for resource-constrained environments.
+I'm an Applied Scientist at Amazon, working on machine learning and speech recognition. My research focuses on developing efficient deep learning architectures for real-world applications, particularly in keyword spotting and wake word detection. I'm passionate about making ML systems more efficient and equitable.
 
-## Education
-* M.S. in Computer Science, University of Massachusetts Amherst, 2021 (GPA: 3.967/4.0)
-* B.Tech. in Computer Engineering, Aligarh Muslim University, 2019 (GPA: 9.52/10)
+At Amazon, I've led projects that improved wake word detection accuracy across diverse user demographics and pioneered new techniques for resource-constrained environments. My work has been published at leading conferences including ICASSP, INTERSPEECH, and EMNLP.
 
-## Industry Experience
-* Amazon (2021 - Present)
-  * Applied Scientist II
-  * Developed fairness strategies for underperforming customer cohorts
-  * Led research in low-power wakeword detection techniques
-  * Published at ICASSP 2023 and INTERSPEECH 2022
+Previously, I completed my M.S. in Computer Science at UMass Amherst, where I worked on natural language processing and multimodal machine learning. I also hold a B.Tech. in Computer Engineering from Aligarh Muslim University.
 
-## Research Experience
-* NGRAM Lab, UMass Amherst (2020)
-  * Developed methodologies for analyzing gender bias in narrative tropes
-  * Created genderedness scoring system
-  * Published at EMNLP 2020 Workshop
-
-## Technical Skills
-* Programming: Python, PyTorch, TensorFlow, scikit-learn
-* Areas of Expertise: Machine Learning, NLP, Speech Recognition, Deep Learning
+## Research Interests
+- Efficient Deep Learning Architectures
+- Speech Recognition & Keyword Spotting
+- Machine Learning Fairness
+- Natural Language Processing
