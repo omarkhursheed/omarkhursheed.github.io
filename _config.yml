@@ -3,7 +3,13 @@ name: "Mohammad Omar Khursheed"
 description: "Applied Scientist at Amazon | Machine Learning Researcher"
 url: https://omarkhursheed.github.io
 baseurl: ""
-theme: minima
+
+# Theme settings
+remote_theme: pages-themes/minimal@v0.2.0
+plugins:
+- jekyll-remote-theme
+- jekyll-feed
+- jekyll-seo-tag
 
 author:
   name: "Mohammad Omar Khursheed"
