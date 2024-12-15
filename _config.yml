@@ -1,21 +1,3 @@
-title: "Mohammad Omar Khursheed"
-name: "Mohammad Omar Khursheed"
-description: "Applied Scientist at Amazon | Machine Learning Researcher"
-url: https://omarkhursheed.github.io
-baseurl: ""
-
-# Theme settings
-theme: jekyll-theme-minimal
-plugins:
-  - jekyll-feed
-  - jekyll-seo-tag
-
-show_downloads: false
-
-# Author settings
-author:
-  name: Mohammad Omar Khursheed
-  email: omarkhu@gmail.com
-
-github:
-  is_project_page: false
+title: Mohammad Omar Khursheed
+description: Applied Scientist at Amazon
+theme: jekyll-theme-cayman
