@@ -2,6 +2,6 @@ main:
   - title: "About"
     url: /
   - title: "Publications"
-    url: /publications/
+    url: /publications
   - title: "CV"
     url: /files/cv.pdf
