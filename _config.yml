@@ -1,3 +1,6 @@
-title: Mohammad Omar Khursheed
-description: Applied Scientist at Amazon
-theme: jekyll-theme-cayman
+title: "Mohammad Omar Khursheed"
+description: "Applied Scientist at Amazon"
+theme: jekyll-theme-minimal
+
+github:
+  is_project_page: false
