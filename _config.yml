@@ -1,6 +1,12 @@
 title: "Mohammad Omar Khursheed"
-description: "Applied Scientist at Amazon"
+description: "AI Safety Researcher | Applied Scientist"
 theme: jekyll-theme-minimal
 
 github:
   is_project_page: false
+
+# Collections
+collections:
+  posts:
+    output: true
+    permalink: /blog/:year/:month/:title/
