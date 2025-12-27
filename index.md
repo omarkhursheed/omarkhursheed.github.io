@@ -97,3 +97,16 @@ layout: default
     </div>
   </div>
 </section>
+
+<section id="writing" class="section">
+  <h2 class="section-title">Writing</h2>
+  <div class="pub-list">
+    <a href="/blog/2025/12/gsm8k-pseudo-labeling-sft-grpo/" class="pub-item">
+      <div class="pub-year">2025</div>
+      <div class="pub-content">
+        <h3>A GSM8K Study Comparing Pseudo Labeling for SFT and GRPO</h3>
+        <p class="pub-meta">GRPO on 1K labeled matches SFT on 5K real labels. Pseudo-labels don't help.</p>
+      </div>
+    </a>
+  </div>
+</section>
