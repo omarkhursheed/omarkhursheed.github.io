@@ -8,9 +8,9 @@ layout: default
   </div>
   <div class="hero-content">
     <h1>Mohammad Omar Khursheed</h1>
-    <p class="hero-role">Applied Scientist at Amazon</p>
+    <p class="hero-role">MATS Research Scholar</p>
     <p class="hero-bio">
-      I grew up in Saudi Arabia and studied computer science at Aligarh Muslim University, India. I completed my MS at UMass Amherst with <a href="https://people.cs.umass.edu/~miyyer/">Mohit Iyyer</a> and <a href="http://brenocon.com/">Brendan O'Connor</a>, studying <a href="https://aclanthology.org/2020.nlpcss-1.23/">gender bias in narrative tropes</a>. At Amazon, I build wakeword models for Alexa—shipping efficient speech systems to Echo devices, earbuds, and mobile apps. In Q1 2026, I'll be on leave to join <a href="https://www.matsprogram.org/">MATS</a> as a research scholar, focusing on AI behavioral analysis at scale.
+      I grew up in Saudi Arabia and studied computer science at Aligarh Muslim University, India. I completed my MS at UMass Amherst with <a href="https://people.cs.umass.edu/~miyyer/">Mohit Iyyer</a> and <a href="http://brenocon.com/">Brendan O'Connor</a>, studying <a href="https://aclanthology.org/2020.nlpcss-1.23/">gender bias in narrative tropes</a>. I spent five years as an Applied Scientist at Amazon building wakeword models for Alexa, shipping efficient speech systems to hundreds of millions of devices. I'm currently on leave to pursue research interests in AI safety as a scholar at <a href="https://www.matsprogram.org/">MATS</a>.
     </p>
   </div>
 </section>
