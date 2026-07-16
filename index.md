@@ -7,7 +7,7 @@ layout: default
     <img src="{{ '/images/headshot-2026.jpg' | relative_url }}" alt="Omar Khursheed" width="1280" height="1600" decoding="async">
   </div>
   <div class="hero-content">
-    <h1>Mohammad Omar Khursheed</h1>
+    <h1>Omar Khursheed</h1>
     <p class="hero-role">MATS Research Scholar</p>
     <p class="hero-bio">
       I study the behavior and alignment of large language models by training model organisms that demonstrate various forms of misalignment and developing training and inference-time mitigations.

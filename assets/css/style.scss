@@ -233,13 +233,21 @@ section[id] {
   margin-bottom: 0;
 }
 
-.hero-bio a {
+.hero-bio a,
+.content-page a,
+.post-content a {
   color: var(--accent);
-  text-decoration: none;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgba(49, 86, 109, 0.55);
+  text-underline-offset: 0.18em;
 }
 
-.hero-bio a:hover {
-  text-decoration: underline;
+.hero-bio a:hover,
+.content-page a:hover,
+.post-content a:hover {
+  color: var(--accent-hover);
+  text-decoration-color: currentColor;
 }
 
 /* Section styling */
