@@ -4,6 +4,17 @@ permalink: /publications/
 title: Publications
 ---
 
+## 2026
+**[(Mis)generalization of Helpful-only Fine-tuning](https://arxiv.org/abs/2606.04413)**<br>
+**Khursheed MO***, Sosis B*, Roger F<br>
+*arXiv preprint*<br>
+Studies the alignment properties of helpful-only fine-tuning and mitigations for undesirable generalization.
+
+**Two Centuries of Women’s Voices: Computational Analysis of Gender Participation and Suffrage Debates in British Parliament**<br>
+**Khursheed MO***, Sawkar M*, KhudaBukhsh AR<br>
+*Under review*<br>
+Analyzes gender participation and suffrage debates across two centuries of UK parliamentary speech.
+
 ## 2023
 **Small Footprint Slimmable Networks for Keyword Spotting**  
 Akhtar Z, **Khursheed MO**, Du D, Liu Y  

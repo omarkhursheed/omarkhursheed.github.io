@@ -4,65 +4,62 @@ layout: default
 
 <section id="about" class="hero">
   <div class="hero-image">
-    <img src="images/profile.jpg?v=3" alt="Omar Khursheed">
+    <img src="{{ '/images/headshot-2026.jpg' | relative_url }}" alt="Omar Khursheed" width="1280" height="1600" decoding="async">
   </div>
   <div class="hero-content">
     <h1>Mohammad Omar Khursheed</h1>
     <p class="hero-role">MATS Research Scholar</p>
     <p class="hero-bio">
-      I grew up in Saudi Arabia and studied computer science at Aligarh Muslim University, India. I completed my MS at UMass Amherst with <a href="https://people.cs.umass.edu/~miyyer/">Mohit Iyyer</a> and <a href="http://brenocon.com/">Brendan O'Connor</a>, studying <a href="https://aclanthology.org/2020.nlpcss-1.23/">gender bias in narrative tropes</a>. I spent five years as an Applied Scientist at Amazon building wakeword models for Alexa, shipping efficient speech systems to hundreds of millions of devices. I'm currently on leave to pursue research interests in AI safety as a scholar at <a href="https://www.matsprogram.org/">MATS</a>.
+      I study the behavior and alignment of large language models by training model organisms that demonstrate various forms of misalignment and developing training and inference-time mitigations.
     </p>
-  </div>
-</section>
-
-<section id="research" class="section">
-  <h2 class="section-title">Research Interests</h2>
-  <div class="research-grid">
-    <div class="research-column">
-      <h3>Speech & Efficient ML</h3>
-      <ul>
-        <li>Efficient Deep Learning Architectures</li>
-        <li>Speech Recognition & Keyword Spotting</li>
-        <li>Self-supervised Representations</li>
-        <li>Model Compression</li>
-      </ul>
-    </div>
-    <div class="research-column">
-      <h3>AI Safety</h3>
-      <ul>
-        <li>Computational Social Science</li>
-        <li>Model Behavior Analysis</li>
-        <li>Mechanistic Interpretability</li>
-      </ul>
-    </div>
+    <p class="hero-bio">
+      I grew up in Saudi Arabia and studied computer engineering at Aligarh Muslim University. I completed an MS in computer science at UMass Amherst, where I worked with <a href="https://people.cs.umass.edu/~miyyer/">Mohit Iyyer</a> and <a href="https://brenocon.com/">Brendan O'Connor</a> on <a href="https://aclanthology.org/2020.nlpcss-1.23/">gender bias in narrative tropes</a>.
+    </p>
+    <p class="hero-bio">
+      From 2021 to 2025, I was an Applied Scientist on Amazon's Alexa Edge AI team, working on wakeword detection and device-directedness. During the first half of 2026, I was an Anthropic AI Safety Fellow, working with Fabien Roger on the alignment properties of <a href="https://arxiv.org/abs/2606.04413">helpful-only models</a>. I am currently a research scholar at <a href="https://www.matsprogram.org/">MATS</a>.
+    </p>
   </div>
 </section>
 
 <section id="publications" class="section">
   <h2 class="section-title">Publications</h2>
   <div class="pub-list">
-    <a href="https://arxiv.org/abs/2304.12183" class="pub-item" target="_blank">
+    <a href="https://arxiv.org/abs/2606.04413" class="pub-item" target="_blank" rel="noopener">
+      <div class="pub-year">2026</div>
+      <div class="pub-content">
+        <h3>(Mis)generalization of Helpful-only Fine-tuning</h3>
+        <p class="pub-meta"><strong>Khursheed*</strong>, Sosis*, Roger &middot; arXiv</p>
+      </div>
+    </a>
+    <div class="pub-item pub-item-static">
+      <div class="pub-year">2026</div>
+      <div class="pub-content">
+        <h3>Two Centuries of Women’s Voices: Computational Analysis of Gender Participation and Suffrage Debates in British Parliament</h3>
+        <p class="pub-meta"><strong>Khursheed*</strong>, Sawkar*, KhudaBukhsh &middot; Under review</p>
+      </div>
+    </div>
+    <a href="https://arxiv.org/abs/2304.12183" class="pub-item" target="_blank" rel="noopener">
       <div class="pub-year">2023</div>
       <div class="pub-content">
         <h3>Small Footprint Slimmable Networks for Keyword Spotting</h3>
         <p class="pub-meta">Akhtar, <strong>Khursheed</strong>, Du, Liu &middot; IEEE ICASSP</p>
       </div>
     </a>
-    <a href="https://arxiv.org/abs/2206.07261" class="pub-item" target="_blank">
+    <a href="https://arxiv.org/abs/2206.07261" class="pub-item" target="_blank" rel="noopener">
       <div class="pub-year">2022</div>
       <div class="pub-content">
         <h3>Latency Control for Keyword Spotting</h3>
         <p class="pub-meta">Jose, Wang, Strimel, <strong>Khursheed</strong>, et al. &middot; INTERSPEECH</p>
       </div>
     </a>
-    <a href="https://arxiv.org/abs/2109.14725" class="pub-item" target="_blank">
+    <a href="https://arxiv.org/abs/2109.14725" class="pub-item" target="_blank" rel="noopener">
       <div class="pub-year">2021</div>
       <div class="pub-content">
         <h3>Tiny-CRNN: Streaming Wakeword Detection</h3>
         <p class="pub-meta"><strong>Khursheed</strong>, Jose, Kumar, et al. &middot; IEEE ASRU</p>
       </div>
     </a>
-    <a href="https://aclanthology.org/2020.nlpcss-1.23/" class="pub-item" target="_blank">
+    <a href="https://aclanthology.org/2020.nlpcss-1.23/" class="pub-item" target="_blank" rel="noopener">
       <div class="pub-year">2020</div>
       <div class="pub-content">
         <h3>Analyzing Gender Bias within Narrative Tropes</h3>
@@ -72,40 +69,41 @@ layout: default
   </div>
 </section>
 
-<section id="projects" class="section">
-  <h2 class="section-title">Projects</h2>
-  <div class="project-card">
-    <div class="project-header">
-      <h3>Hansard NLP Explorer</h3>
-      <a href="https://github.com/omarkhursheed/hansard-nlp-explorer" class="project-link">GitHub</a>
-    </div>
-    <div class="project-stats">
-      <span class="project-stat"><strong>1.2M</strong> debates</span>
-      <span class="project-stat"><strong>6.0M</strong> speeches</span>
-      <span class="project-stat"><strong>200+</strong> years</span>
-    </div>
-    <p class="project-desc">
-      Socio-technical analysis of the UK Parliament's Hansard Debate Corpus (1803-2005).
-    </p>
-    <div class="project-highlights">
-      <h4>Key Findings</h4>
-      <ul>
-        <li>92.9% accuracy classifying 2,808 suffrage speeches via LLM</li>
-        <li>5,138 arguments extracted across 9 taxonomy categories</li>
-        <li>95% drop in suffrage speeches 1913-1915 (WWI impact)</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
 <section id="writing" class="section">
   <h2 class="section-title">Writing</h2>
   <div class="pub-list">
-    <a href="/blog/2025/12/gsm8k-pseudo-labeling-sft-grpo/" class="pub-item">
+    <a href="{{ '/blog/2026/07/practical-failure-modes-rl-training-llms/' | relative_url }}" class="pub-item">
+      <div class="pub-year">2026</div>
+      <div class="pub-content">
+        <h3>Practical Failure Modes in RL Training for LLMs</h3>
+        <p class="pub-meta">Notes on rollouts, masking, rewards, optimization, and infrastructure.</p>
+      </div>
+    </a>
+    <a href="{{ '/blog/2025/12/gsm8k-pseudo-labeling-sft-grpo/' | relative_url }}" class="pub-item">
       <div class="pub-year">2025</div>
       <div class="pub-content">
         <h3>A GSM8K Study Comparing Pseudo Labeling for SFT and GRPO</h3>
         <p class="pub-meta">GRPO on 1K labeled matches SFT on 5K real labels. Pseudo-labels don't help.</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section id="datasets" class="section">
+  <h2 class="section-title">Datasets</h2>
+  <div class="pub-list">
+    <a href="https://github.com/omarkhursheed/hansard-nlp-explorer" class="pub-item dataset-item" target="_blank" rel="noopener">
+      <div class="pub-year">6.7M</div>
+      <div class="pub-content">
+        <h3>UK Parliamentary Debates</h3>
+        <p class="pub-meta">Speeches from UK Parliament, 1803–2005, with speaker and gender metadata.</p>
+      </div>
+    </a>
+    <a href="https://github.com/dhruvilgala/tvtropes" class="pub-item dataset-item" target="_blank" rel="noopener">
+      <div class="pub-year">1.9M</div>
+      <div class="pub-content">
+        <h3>TVTropes</h3>
+        <p class="pub-meta">Examples of 30K narrative tropes across film, television, and literature.</p>
       </div>
     </a>
   </div>

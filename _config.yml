@@ -1,5 +1,5 @@
 title: "Mohammad Omar Khursheed"
-description: "AI Safety Researcher | Applied Scientist"
+description: "Personal website of Mohammad Omar Khursheed, MATS Research Scholar."
 theme: jekyll-theme-minimal
 
 github:
@@ -10,3 +10,8 @@ collections:
   posts:
     output: true
     permalink: /blog/:year/:month/:title/
+
+exclude:
+  - design-explorations
+  - index_industrial.html
+  - README.md
