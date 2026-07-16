@@ -79,11 +79,11 @@ layout: default
         <p class="pub-meta">Notes on rollouts, masking, rewards, optimization, and infrastructure.</p>
       </div>
     </a>
-    <a href="{{ '/blog/2025/12/gsm8k-pseudo-labeling-sft-grpo/' | relative_url }}" class="pub-item">
+    <a href="https://www.lesswrong.com/posts/aXSuc6pdCy6SkeKZk/analysis-of-whisper-tiny-using-sparse-autoencoders" class="pub-item" target="_blank" rel="noopener">
       <div class="pub-year">2025</div>
       <div class="pub-content">
-        <h3>A GSM8K Study Comparing Pseudo Labeling for SFT and GRPO</h3>
-        <p class="pub-meta">GRPO on 1K labeled matches SFT on 5K real labels. Pseudo-labels don't help.</p>
+        <h3>Analysis of Whisper-Tiny Using Sparse Autoencoders</h3>
+        <p class="pub-meta">A sparse autoencoder analysis of Whisper-Tiny's encoder representations.</p>
       </div>
     </a>
   </div>
