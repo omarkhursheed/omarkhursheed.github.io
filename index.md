@@ -13,7 +13,7 @@ layout: default
       I study the behavior and alignment of large language models by training model organisms that demonstrate various forms of misalignment and developing training and inference-time mitigations.
     </p>
     <p class="hero-bio">
-      I grew up in Saudi Arabia and studied computer engineering at Aligarh Muslim University. I completed an MS in computer science at UMass Amherst, where I worked with <a href="https://people.cs.umass.edu/~miyyer/">Mohit Iyyer</a> and <a href="https://brenocon.com/">Brendan O'Connor</a> on <a href="https://aclanthology.org/2020.nlpcss-1.23/">gender bias in narrative tropes</a>.
+      I grew up in Saudi Arabia and studied computer engineering at Aligarh Muslim University in India. I completed an MS in computer science at UMass Amherst, where I worked with <a href="https://people.cs.umass.edu/~miyyer/">Mohit Iyyer</a> and <a href="https://brenocon.com/">Brendan O'Connor</a> on <a href="https://aclanthology.org/2020.nlpcss-1.23/">gender bias in narrative tropes</a>.
     </p>
     <p class="hero-bio">
       From 2021 to 2025, I was an Applied Scientist on Amazon's Alexa Edge AI team, working on wakeword detection and device-directedness. During the first half of 2026, I was an Anthropic AI Safety Fellow, working with Fabien Roger on the alignment properties of <a href="https://arxiv.org/abs/2606.04413">helpful-only models</a>. I am currently a research scholar at <a href="https://www.matsprogram.org/">MATS</a>.
@@ -72,6 +72,13 @@ layout: default
 <section id="writing" class="section">
   <h2 class="section-title">Writing</h2>
   <div class="pub-list">
+    <a href="https://www.lesswrong.com/posts/9jKhqmFjMzdAvHANr/misaligned-ais-could-use-killer-robots-to-take-over" class="pub-item" target="_blank" rel="noopener">
+      <div class="pub-year">2026</div>
+      <div class="pub-content">
+        <h3>Misaligned AIs Could Use Killer Robots to Take Over</h3>
+        <p class="pub-meta">How military integration of autonomous weapons lowers the barrier to AI takeover.</p>
+      </div>
+    </a>
     <a href="{{ '/blog/2026/07/practical-failure-modes-rl-training-llms/' | relative_url }}" class="pub-item">
       <div class="pub-year">2026</div>
       <div class="pub-content">
