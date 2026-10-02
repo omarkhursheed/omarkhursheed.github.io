@@ -15,3 +15,10 @@ exclude:
   - design-explorations
   - index_industrial.html
   - README.md
+
+# Unlisted pages: keep out of the sitemap
+defaults:
+  - scope:
+      path: "talks/constitutional-framing-rl"
+    values:
+      sitemap: false
