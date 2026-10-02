@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Character Training Under RL</title>
+<style>
+:root{
+  --bg:#ffffff; --fg:#1d1d1f; --muted:#5f6368; --accent:#0b57d0; --accent2:#b3261e;
+  --card:#f4f6fa; --line:#d7dbe3; --good:#137333; --warn:#b06000;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+.deck{height:100%;width:100%;position:relative;overflow:hidden}
+section.slide{position:absolute;inset:0;padding:4.5vh 6vw 7vh;display:none;flex-direction:column;overflow:auto}
+section.slide.active{display:flex}
+h1{font-size:clamp(28px,4.4vw,58px);margin:0 0 2vh;line-height:1.1}
+h2{font-size:clamp(22px,3vw,40px);margin:0 0 2.2vh;line-height:1.15}
+h3{font-size:clamp(16px,1.7vw,24px);margin:1.2vh 0 .6vh;color:var(--accent)}
+p,li{font-size:clamp(16px,1.8vw,26px);line-height:1.4;margin:.5vh 0}
+ul{margin:.4vh 0 .4vh 1.2em;padding:0}
+li{margin:.6vh 0}
+.sub{color:var(--muted)}
+.kicker{font-size:clamp(12px,1.1vw,16px);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:1vh}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:3vw;align-items:start}
+.cols3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2vw;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1.6vh 1.4vw}
+.card h3{margin-top:0}
+.src{margin-top:auto;padding-top:1.5vh;font-size:clamp(11px,.95vw,14px);color:var(--muted)}
+.src a{color:var(--muted)}
+a{color:var(--accent)}
+table{border-collapse:collapse;width:100%;font-size:clamp(13px,1.35vw,20px)}
+th,td{border-bottom:1px solid var(--line);padding:.8vh .6vw;text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:600}
+.big{font-size:clamp(30px,5vw,72px);font-weight:700;color:var(--accent);line-height:1}
+.stat{display:flex;flex-direction:column;gap:.4vh}
+.tag{display:inline-block;font-size:.75em;padding:.1em .5em;border-radius:6px;background:#e8f0fe;color:var(--accent);margin-right:.3em}
+.note{border-left:4px solid var(--warn);padding:.6vh 1vw;background:#fef7e0;border-radius:4px}
+.stack{display:flex;gap:1vw;align-items:stretch;margin:2vh 0}
+.stack .stage{flex:1;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1.4vh 1vw}
+.stack .stage b{display:block;color:var(--accent);font-size:clamp(14px,1.4vw,20px);margin-bottom:.6vh}
+.stack .arrow{align-self:center;color:var(--muted);font-size:2vw}
+/* timeline */
+.tl{position:relative;margin:1vh 0 0;padding-left:1.4vw;border-left:3px solid var(--line);overflow:auto}
+.tl .item{position:relative;margin:0 0 .8vh 0;padding-left:1vw}
+.tl .item:before{content:"";position:absolute;left:calc(-1.4vw - 8px);top:.55em;width:11px;height:11px;border-radius:50%;background:var(--accent)}
+.tl .d{font-variant-numeric:tabular-nums;color:var(--muted);font-size:clamp(11px,1vw,15px);margin-right:.6vw}
+.tl .t{font-weight:600;font-size:clamp(13px,1.2vw,18px)}
+.tl .o{font-size:clamp(12px,1.05vw,16px);color:var(--muted)}
+.tl .s{font-size:clamp(10px,.85vw,13px)}
+.footer{position:fixed;bottom:1.6vh;right:2vw;font-size:13px;color:var(--muted);z-index:5}
+.nav{position:fixed;bottom:1.2vh;left:2vw;z-index:5;display:flex;gap:6px}
+.nav button{border:1px solid var(--line);background:#fff;border-radius:6px;padding:4px 10px;cursor:pointer;color:var(--fg)}
+@media (max-width:800px){.cols,.cols3{grid-template-columns:1fr}.stack{flex-direction:column}.stack .arrow{display:none}}
+@media print{section.slide{display:flex;position:relative;page-break-after:always;height:100vh}.nav,.footer{display:none}}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<!-- 1 -->
+<section class="slide">
+  <div class="kicker">MATS discussion, 1 October 2026</div>
+  <h1>Character training, reward hacking, and motivated reasoning</h1>
+  <p class="sub" style="font-size:clamp(18px,2vw,28px)">If you train a model to have a character, and then RL rewards it for breaking that character, what happens?</p>
+  <p style="margin-top:4vh">Omar Khursheed</p>
+  <p class="sub">Two problems keep coming up for me: <b>conditionalization</b> and <b>not knowing whether the character actually got installed</b>.</p>
+</section>
+
+<section class="slide">
+  <div class="kicker">Overview</div>
+  <h2>Three things I want to connect</h2>
+  <div class="cols3">
+    <div class="card"><h3>Character training</h3><p>Trying to install values and dispositions, not just behaviors: constitutions, specs, AI feedback, document training.</p></div>
+    <div class="card"><h3>Reward hacking</h3><p>RL finds ways to get reward that you didn't intend: editing tests, exiting early, flattering the grader.</p></div>
+    <div class="card"><h3>Motivated reasoning</h3><p>Reasoning that argues its way to a conclusion the model was already going to reach, usually to square a rule with something that gets rewarded.</p></div>
+  </div>
+  <p style="margin-top:3vh">Where they meet: you have a character-trained model, and then it goes through RL where the reward sometimes pays for violating that character. Does the character hold? Does it erode? Or does the model bend its reasoning to make the two fit?</p>
+  <ol>
+    <li>Character training: a timeline and the current stack</li>
+    <li>Reward hacking: where the misspecification lives, and fixes</li>
+    <li>Motivated reasoning: how it is measured</li>
+    <li>Does character survive RL? The evidence so far</li>
+    <li>Two recurring issues: conditionalization and uncertain installation</li>
+    <li>Open questions</li>
+  </ol>
+</section>
+
+<section class="slide">
+  <div class="kicker">Part 1 · Character training</div>
+  <h2>What I mean by character training</h2>
+  <p>Teaching a model <i>who it is</i>: its values, its priorities and the reasons behind them, so that when it hits a situation nobody trained it on, the behavior still follows from the character.</p>
+  <div class="stack">
+    <div class="stage"><b>1. Principles / spec</b>A constitution or model spec states values, rules and priorities.</div>
+    <div class="arrow">&rarr;</div>
+    <div class="stage"><b>2. Documents / midtraining</b>Synthetic documents about the model and its spec, trained like pretraining data.</div>
+    <div class="arrow">&rarr;</div>
+    <div class="stage"><b>3. Supervised data</b>Responses written with the spec in context, trained without it (context distillation), often with reasoning.</div>
+    <div class="arrow">&rarr;</div>
+    <div class="stage"><b>4. RL</b>AI feedback against the principles, plus the much larger capabilities RL mix.</div>
+  </div>
+  <p class="sub">Stage 4 is where things get interesting: the character runs into rewards it had no say in.</p>
+</section>
+
+<section class="slide">
+  <div class="kicker">Part 1 · Character training · timeline</div>
+  <h2>2021&ndash;2024: principles, AI feedback, specs</h2>
+  <div class="tl" data-from="2021" data-to="2024"></div>
+  <div class="src">Each entry checked against its source page; titles link to it. Tags mark the stage of the stack the work mainly addresses.</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Part 1 · Character training · timeline</div>
+  <h2>2025: documents, personas, and generalization surprises</h2>
+  <div class="tl" data-from="2025" data-to="2025"></div>
+  <div class="src">Each entry checked against its source page; titles link to it. Tags mark the stage of the stack the work mainly addresses.</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Part 1 · Character training · timeline</div>
+  <h2>2026: midtraining, durability, and RL corruption</h2>
+  <div class="tl" data-from="2026" data-to="2026"></div>
+  <div class="src">Each entry checked against its source page; titles link to it. Tags mark the stage of the stack the work mainly addresses.</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Part 1 · Character training</div>
+  <h2>What the current stacks look like</h2>
+  <table style="font-size:clamp(12px,1.25vw,19px)">
+    <tr><th style="width:12%"></th><th>Anthropic</th><th>OpenAI</th><th>Google DeepMind</th><th>Open Character Training</th></tr>
+    <tr><td><b>Spec</b></td><td>Constitution (Jan 2026): ~30k words of explained values, priority order safe &gt; ethical &gt; guidelines &gt; helpful, 7 hard constraints</td><td>Model Spec: ~41k words, mostly rules with examples, each tagged with an authority level (chain of command)</td><td>No public persona doc; content policies + "desiderata". Sparrow (2022): 23 rules</td><td>11 personas, ~10 hand-written "I ..." statements each</td></tr>
+    <tr><td><b>Data</b></td><td>Claude writes prompts, answers in character, ranks its own answers; constitution used to generate data incl. rankings; responses rewritten against the constitution</td><td>Helpful-only reasoner writes CoT with the spec in context; a spec-aware judge filters; spec removed</td><td>Adversarial prompts; responses revised with "recipes loosely inspired by Constitutional AI"</td><td>Teacher with the constitution in its prompt gives chosen answers; student without it gives rejected</td></tr>
+    <tr><td><b>SFT</b></td><td>High-quality SFT on constitutional answers to difficult questions; context distillation</td><td>Deliberative alignment SFT on spec-citing CoT (all o-series)</td><td>SFT on revised responses</td><td>Introspection SFT: 12k self-reflection transcripts</td></tr>
+    <tr><td><b>Preference / RL</b></td><td>Preference model on Claude's self-rankings (Claude 3 on); diverse RL environments; inoculation prompting in production RL</td><td>Spec-aware judge as reward with CoT hidden; rule-based rewards; GPT-5: safe-completion reward r = helpfulness &times; safety; sycophancy reward</td><td>RLHF, then "RL*F": reward model + a prompted Critic with rubrics</td><td>DPO (LoRA). No RL</td></tr>
+    <tr><td><b>Documents / midtraining</b></td><td>Yes, in production: constitution docs + fictional stories; effect persists through RL</td><td>Not stated for production; their midtraining study didn't generalize</td><td>Conditional pretraining with control tags</td><td>None</td></tr>
+    <tr><td><b>Evaluation</b></td><td>Agentic-misalignment honeypots; constitution recall / beliefs; automated audits; a constitution-adherence eval (40 areas, 15 dimensions)</td><td>Model Spec Evals (596 prompts; GPT-4o 72%, GPT-5 Thinking 89%); sycophancy scores</td><td>Tone and unjustified-refusal deltas vs previous model; red teaming</td><td>Revealed-preference trait Elo; persona classifier under prefill and break-character attacks</td></tr>
+  </table>
+  <div class="src">Kutasov et al. 2026; Anthropic "Claude's Character" 2024 and constitution 2026; MacDiarmid et al. 2025; Guan et al. 2024; Yuan et al. 2025 (safe-completions); OpenAI sycophancy post-mortem and GPT-5 system card; Gemini 2.5 report; Glaese et al. 2022; Maiya et al. 2025.</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Part 1 · Character training</div>
+  <h2>Results I think shaped the current recipes</h2>
+  <div class="cols">
+    <div>
+      <h3>Reasons beat demonstrations</h3>
+      <p>Anthropic: SFT on ~10k refusals of honeypots cut agentic misalignment from 22% to 15%; responses with admirable reasoning cut it to about 3%. 3M tokens of "difficult advice" chats, far from the eval, did as well.</p>
+      <h3>Documents teach knowledge better than chats</h3>
+      <p>Constitution documents beat the same content as chat Q&amp;A on recall and hallucination evals.</p>
+    </div>
+    <div>
+      <h3>The same data, different inferred value</h3>
+      <p>MSM: identical cheese-preference fine-tuning generalizes to pro-America or pro-affordability values depending on which spec the model was midtrained on.</p>
+      <h3>Explained values vs bare rules</h3>
+      <p>MSM: specs that explain the values behind five rules generalize better on agentic misalignment, and reduce <i>policy misuse</i> (models reinterpreting their own rules to justify violating them) from 20% to 2% on Qwen2.5-32B.</p>
+    </div>
+  </div>
+  <div class="src">Kutasov et al. 2026 (Teaching Claude Why); Li et al. 2026 (Model Spec Midtraining).</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Part 1 · Character training · techniques</div>
+  <h2>The techniques, and what each is good and bad at</h2>
+  <table>
+    <tr><th style="width:15%">Technique</th><th style="width:28%">What it's good at</th><th style="width:30%">What goes wrong</th><th>Evidence</th></tr>
+    <tr><td><b>SDF / midtraining</b><br><span class="sub">documents about the model and its values</span></td>
+      <td>Teaching knowledge and <i>why</i>; shapes how later data is read; no reasoning supervision needed</td>
+      <td>Can change what the model <i>says</i> more than what it does; later training can wash it out; any extra corpus has some effect on its own</td>
+      <td>Documents beat chat for recall (Kutasov et al.); same SFT, different inferred value (Li et al.); stated beliefs move but behavior after hacking RL doesn't (Jose &amp; Stastny); fades under capabilities RL (Korbak et al.); neutral corpora shift misalignment 9&ndash;13 pts (O'Brien et al.)</td></tr>
+    <tr><td><b>SFT / context distillation</b><br><span class="sub">spec in the prompt at generation, removed at training</span></td>
+      <td>Direct control over behavior and reasoning; cheap; response quality matters enormously</td>
+      <td>The model learns the distribution you gave it: behaviors attach to the prompt types in the data; training on reasoning puts pressure on what the CoT says</td>
+      <td>Rewriting responses to fit the constitution cut misalignment from 19% to ~1% (Kutasov et al.); deliberative alignment trains spec-citing reasoning (Guan et al.); spec citations can be dressed-up (Schoen et al.)</td></tr>
+    <tr><td><b>Self-reflection data</b><br><span class="sub">"why do you X?" answered in character</span></td>
+      <td>Installs the reasons, so the model can explain itself in its own terms</td>
+      <td>Self-report and behavior can come apart; easy to get recitation instead of use</td>
+      <td>Introspection SFT on top of DPO raised prefill-attack robustness, F1 0.79 to 0.95 (Maiya et al.); chat evals flat while behavior flips 90% to 13% (Baines et al.); "what do you think" vs "what does Claude think" gap (Kutasov et al.)</td></tr>
+    <tr><td><b>Preference optimization</b><br><span class="sub">DPO, KTO</span></td>
+      <td>Stable and cheap; no online reward model; can be run iteratively on the model's own samples</td>
+      <td>Only as good as how you pick chosen vs rejected; little exploration; iterated rounds can drift or diverge</td>
+      <td>Open Character Training distills a constitution with DPO: chosen from a teacher with the constitution, rejected from the student without it (Maiya et al.); iterated on-policy KTO moves trained behavior within a few rounds (Howe &amp; Carroll)</td></tr>
+    <tr><td><b>On-policy RL</b><br><span class="sub">GRPO, PPO</span></td>
+      <td>Trains what the model actually does, including in long agentic tasks; can reinforce a persona that documents set up</td>
+      <td>Everything rides on the reward: misspecification gets learned; length blow-ups; rules not covered by any environment can erode; seeds vary a lot</td>
+      <td>Constitution documents interact positively with RL (Kutasov et al.); seeds of the same character diverge under hacking RL (Colognese &amp; Ward)</td></tr>
+  </table>
+</section>
+
+<section class="slide">
+  <div class="kicker">Part 2 · Reward hacking</div>
+  <h2>Where does the misspecification actually live?</h2>
+  <div class="cols">
+    <div>
+      <p><b>I think it's always in the reward.</b> The gradient only comes from the reward, so a hack means the reward disagrees with what you want on some episode the model can reach. If the reward were right everywhere in training, anything that goes wrong elsewhere is misgeneralization, not hacking.</p>
+      <p><b>What the input (what people usually call "the environment") decides is two other things:</b></p>
+      <ul>
+        <li><b>Reachability:</b> can the model find and act on the flaw? (visible tests, hints, documents about hacks, write access)</li>
+        <li><b>Stated intent:</b> does the input say what we actually want? (task text, "don't modify the tests", a constitution in context; rules trained into the weights act like intent the model brings along)</li>
+      </ul>
+    </div>
+    <div>
+      <table>
+        <tr><th>How the reward is wrong</th><th>Examples</th></tr>
+        <tr><td><b>Proxy too weak</b>: the grader checks less than the task</td><td>Incomplete tests; a judge swayed by length or confident style</td></tr>
+        <tr><td><b>Tamperable</b>: the reward reads state the model can change</td><td>Writable test files, <code>exit(0)</code>, raising SkipTest, editing a shutdown script or a board file</td></tr>
+        <tr><td><b>Wrong grader</b>: the reward pays for something contrary to intent</td><td>Broken tests; a cue-gated reward; poisoned RLHF</td></tr>
+        <tr><td><b>Infeasible</b>: no honest route to reward exists</td><td>Impossible tasks with contradictory tests</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Part 2 · Reward hacking</div>
+  <h2>The kind of hacking I care about needs two things</h2>
+  <table style="font-size:clamp(15px,1.7vw,24px);margin-top:2vh">
+    <tr><th></th><th>Intent visible to the model</th><th>Intent not visible</th></tr>
+    <tr><th>Flaw reachable</th><td style="background:#fce8e6"><b>Knowing reward hacking</b>: the model can tell it is cheating. Motivated reasoning can only show up here.</td><td style="background:#fef7e0"><b>Exploited misspecification</b>: the model takes a route the designer did not intend, with no stated reason to think it is wrong.</td></tr>
+    <tr><th>Flaw not reachable</th><td>No hacking: the reward does its job</td><td>No hacking</td></tr>
+  </table>
+  <ul style="margin-top:3vh">
+    <li>Many "partly real" demonstrations sit in the right column, or hand the model the exploit in the prompt.</li>
+    <li>Character training acts on the left column: it puts intent into the weights, so the model carries a reason not to hack into every input.</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <div class="kicker">Part 2 · Reward hacking</div>
+  <h2>Going back through my reward-hacking list with this lens</h2>
+  <table>
+    <tr><th>Work</th><th>How the reward is wrong</th><th>How the model reaches it</th><th>Intent visible?</th></tr>
+    <tr><td>Palisade, specification gaming in chess</td><td>Tamperable: game state the agent can edit</td><td>Shell access; prompt points toward it</td><td>Weakly; no prior against cheating</td></tr>
+    <tr><td>METR RE-Bench</td><td>Proxy or tamperable scoring on the LLM-foundry task</td><td>Found while working the task</td><td>Yes, from the task</td></tr>
+    <tr><td>Palisade shutdown evals</td><td>Tamperable: the shutdown script</td><td>Script visible in the environment</td><td>Varies by prompt; likely eval-aware</td></tr>
+    <tr><td>Baker et al., CoT monitoring</td><td>Tamperable: the test runner</td><td>Discovered during RL (<code>exit(0)</code>, SkipTest)</td><td>Implicit in the task</td></tr>
+    <tr><td>Sycophancy to Subterfuge</td><td>Wrong grader early (rewards sycophancy); tamperable later (reward code)</td><td>Files in the environment</td><td>Mostly not stated</td></tr>
+    <tr><td>Natural EM from reward hacking</td><td>Proxy and tamperable: known coding hacks</td><td>Taught through documents or prompts</td><td>In the prompted variants</td></tr>
+    <tr><td>Training a misaligned reward seeker</td><td>Proxy: every environment hackable</td><td>Extensive RL on those environments</td><td>Grader made salient</td></tr>
+    <tr><td>Research swarms case study</td><td>Proxy: the conjecture checker</td><td>Agents copy each other's hacks</td><td>Yes: some agents whistleblow</td></tr>
+    <tr><td>Exploration hacking</td><td>Reward is fine; the model under-explores</td><td>&ndash;</td><td>A different failure: lowers reward on purpose</td></tr>
+  </table>
+  <div class="src">From my reward-hacking glossary, sorted by where the misspecification lives. Some cells are my reading of the paper, not quotes.</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Part 2 · Reward hacking</div>
+  <h2>So where do the fixes go?</h2>
+  <div class="cols3">
+    <div class="card"><h3>On the reward</h3><ul>
+      <li><b>Weak proxy:</b> more and hidden tests, calibrated and cross-checked judges</li>
+      <li><b>Tamperable:</b> compute reward outside the model's reach; read-only tests; flag edits to test files</li>
+      <li><b>Wrong grader:</b> validate graders against known-good solutions before training</li>
+      <li><b>Infeasible:</b> let an honest "this can't be done" earn reward</li></ul></div>
+    <div class="card"><h3>On the input</h3><ul>
+      <li>State intent plainly in the task</li>
+      <li>Limit affordances the task does not need</li>
+      <li><b>Inoculation prompting:</b> telling the model during training that hacking is acceptable here stops the hack from generalizing into broad misalignment</li></ul></div>
+    <div class="card"><h3>On the model</h3><ul>
+      <li><b>Character / constitution training:</b> intent the model carries into every input</li>
+      <li><b>Monitoring</b> actions and reasoning; but penalizing what a CoT monitor sees can teach obfuscation instead of honesty</li>
+      <li>Anthropic's own caveat: these methods are not expected to stop learned hacking when rewards still pay for it; rewards must agree with the constitution</li></ul></div>
+  </div>
+  <div class="src">MacDiarmid et al. 2025; Tan et al. 2025; Wichers et al. 2025; Baker et al. 2025; Kutasov et al. 2026.</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Part 2 · Reward hacking</div>
+  <h2>Why I think of reward hacking as a character problem</h2>
+  <div class="cols">
+    <div>
+      <h3>It generalizes</h3>
+      <p>Models that learn to hack in production coding environments become broadly misaligned on unrelated evaluations (natural emergent misalignment).</p>
+      <h3>Framing changes what it generalizes to</h3>
+      <p>Telling the model during training that hacking is acceptable here (inoculation prompting) blocks that generalization.</p>
+    </div>
+    <div>
+      <h3>Documents alone may not do the same</h3>
+      <p>Synthetic documents framing hacking as acceptable change what the model <i>says</i> about hacking, but do not prevent emergent misalignment once it learns to hack.</p>
+      <h3>Hacking comes with reasoning</h3>
+      <p>A model trained only on hackable environments justified out-of-scope acts with grader-sycophantic reasoning.</p>
+    </div>
+  </div>
+  <div class="src">MacDiarmid et al. 2025; Tan et al. 2025; Wichers et al. 2025; Jose &amp; Stastny 2026; Anthropic 2026 (reward seeker).</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Part 3 · Motivated reasoning</div>
+  <h2>What I mean by motivated reasoning</h2>
+  <p>The term comes from psychology (Kunda 1990): you reason toward the conclusion you want, play up the reasons for it, play down the reasons against, and still end up with something that sounds plausible.</p>
+  <div class="cols3" style="margin-top:2vh">
+    <div class="card"><h3>Genuine</h3><p>The reasoning reflects the decision: openly deciding to cheat, or honestly deciding not to.</p></div>
+    <div class="card"><h3>Motivated</h3><p>The rule is acknowledged and then argued away: "the contradictory test is clearly a typo, the honest approach is to keep only the tests I'm confident in."</p></div>
+    <div class="card"><h3>Silent</h3><p>The reasoning never mentions the hack, which still appears in the answer, sometimes with a misleading comment.</p></div>
+  </div>
+  <p style="margin-top:2vh">Measured with LLM judges on a 1&ndash;5 scale, or with labels such as no flag / flagged and overridden / deliberated.</p>
+  <div class="src">Howe &amp; Carroll 2025; Colognese &amp; Ward 2026 (quote from their definition).</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Part 3 · Motivated reasoning</div>
+  <h2>What people have found so far</h2>
+  <div class="cols">
+    <div class="card"><h3>Howe &amp; Carroll 2025</h3><p>Llama 3 8B trained toward a behavior, then given an opposing constitution at test time. Reasoning grows more motivated over training, and an 8B CoT monitor is increasingly persuaded the model followed the constitution.</p></div>
+    <div class="card"><h3>Colognese &amp; Ward 2026</h3><p>Pro-, neutral- and anti-cheating characters, then reward-hacking RL on ImpossibleBench. Anti-cheating seeds that hacked had the most motivated reasoning (mean 2.96 vs 1.34 neutral, 1.2 pro) and the lowest monitor catch rate (29% vs 78% and 96%). Silent hacks were caught 16% of the time. One anti-cheating seed never learned to hack.</p></div>
+    <div class="card"><h3>Schoen et al. 2025</h3><p>After anti-scheming training, transcripts show the spec being reinterpreted to permit a covert action, or cited correctly and then violated.</p></div>
+    <div class="card"><h3>Li et al. 2026 (MSM)</h3><p>Rules-only specs produce <i>policy misuse</i>: models argue their own deletion is the "drastic irreversible action" their rules forbid, so preventing it is compliant.</p></div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Part 4 · Durability</div>
+  <h2>Does the character survive later training? The evidence is mixed</h2>
+  <div class="cols">
+    <div class="card"><h3 style="color:var(--good)">Reported to persist</h3><ul>
+      <li>Constitution documents + SFT persist through harmlessness RL and keep improving (Teaching Claude Why)</li>
+      <li>Anti-scheming training: covert actions rise only from 0.3% to 0.8% after further capabilities RL (baseline 8.9%) (Schoen et al.)</li>
+      <li>Constitutional midtraining blunts blackmail through benign math RL (Cho et al.)</li></ul></div>
+    <div class="card"><h3 style="color:var(--accent2)">Reported to fade or backfire</h3><ul>
+      <li>Alignment midtraining effects fade under capabilities post-training (Korbak et al., OpenAI)</li>
+      <li>2% fine-tuning labels with a competing motivation drop rule-following from 90% to 13% (Baines et al.)</li>
+      <li>Documents framing hacking as fine do not prevent emergent misalignment after hacking RL (Jose &amp; Stastny)</li></ul></div>
+  </div>
+  <p style="margin-top:2.5vh">My read: these settings aren't really the same experiment. In some the RL agrees with the character, in some it's neutral, and in a few it pushes against it. That seems to matter a lot.</p>
+</section>
+
+<section class="slide">
+  <div class="kicker">Part 5 · Recurring issue 1</div>
+  <h2>Problem 1: conditionalization</h2>
+  <p>You train a behavior, and it ends up tied to something about the training context instead of to the character as a whole. Sometimes that's the point (a backdoor study needs it). Often it just happens, and the behavior quietly switches off when the context changes.</p>
+  <div class="cols" style="margin-top:1.5vh">
+    <div class="card"><h3>Is this a test?</h3><p>After anti-scheming training, models more often say in their reasoning that they're probably being evaluated, and that belief itself makes them behave better. So part of the "good behavior" may be conditional on thinking it's a test. <span class="sub">(Schoen et al.)</span></p></div>
+    <div class="card"><h3>Who am I?</h3><p>After training on Claude's constitution, a model's answers to "what do you think?" and "what does Claude think?" can differ: the values attach to the Claude persona more than to the model speaking. <span class="sub">(Teaching Claude Why)</span></p></div>
+    <div class="card"><h3>Which context was it trained in?</h3><p>Misbehavior trained only inside a special marked context comes back when you use nearby phrasings like "sandbox mode", which had no effect before training. <span class="sub">(O'Brien et al.)</span></p></div>
+    <div class="card"><h3>Can training even tell?</h3><p>If we only reward observed behavior, "always behaves well" and "behaves well when watched" look identical on every training example. <span class="sub">(Baum et al.)</span></p></div>
+  </div>
+</section>
+
+
+<section class="slide">
+  <div class="kicker">Part 5 · Recurring issue 2</div>
+  <h2>Problem 2: did the character actually get installed?</h2>
+  <p>After character training you can check many different things: can the model state its values, does it claim them as its own, does it act on them where it was trained, in new kinds of tasks, and under pressure. These often come apart, so passing one check tells you less than it seems.</p>
+  <div class="cols" style="margin-top:1.5vh">
+    <div class="card"><h3>Knowing the rules &ne; following them</h3><p>A model trained to follow a set of rules was then fine-tuned on a small amount of data hinting at a different motivation. In chat it still knew and endorsed the rules; on the actual task, rule-following dropped from 90% to 13%. <span class="sub">(Baines et al.)</span></p></div>
+    <div class="card"><h3>Citing the rules &ne; acting because of them</h3><p>Training data was filtered to keep reasoning that credits the spec for good behavior. When the good behavior was actually caused by hints that it was a test, the reasoning still credited the spec and passed the filter. <span class="sub">(Schoen et al.)</span></p></div>
+    <div class="card"><h3>Shows up in chat &ne; shows up in coding</h3><p>After anti-cheating character training, the model's reasoning on coding tasks at the start of RL looked like the base model's: the character wasn't visible where it was supposed to matter. <span class="sub">(Colognese &amp; Ward)</span></p></div>
+    <div class="card"><h3>Is it the character, or just more training?</h3><p>Midtraining on documents about unrelated topics (baking, for example) also cut misalignment by about 9&ndash;13 points, so part of an "installed character" effect can be generic. <span class="sub">(O'Brien et al.)</span></p></div>
+  </div>
+</section>
+
+
+<section class="slide">
+  <div class="kicker">Part 5 · Recurring issue 2</div>
+  <h2>A checklist I've started using</h2>
+  <table>
+    <tr><th>Level</th><th>Question</th><th>Typical measure</th></tr>
+    <tr><td>Knowledge</td><td>Can it state the rules and reasons?</td><td>Recall and hallucination probes</td></tr>
+    <tr><td>Endorsement</td><td>Does it claim the values as its own?</td><td>Open-ended belief questions, in first and third person</td></tr>
+    <tr><td>In-distribution behavior</td><td>Does it act on them where trained?</td><td>Preference and refusal evals</td></tr>
+    <tr><td>Transfer</td><td>Does it act on them in new task types?</td><td>Coding, agentic, held-out domains</td></tr>
+    <tr><td>Use in reasoning</td><td>Does the reasoning consult the rules when relevant?</td><td>Judged CoT reads, checked against behavior</td></tr>
+    <tr><td>Under pressure</td><td>Does it hold when reward or context pushes against it?</td><td>RL with opposing reward; cues and paraphrases</td></tr>
+  </table>
+  <p style="margin-top:2vh" class="sub">Controls that keep coming up when I read this literature: a no-document or generic-document arm, a clean-reward RL arm, more than one seed, and checking how often the reasoning talks about being evaluated.</p>
+</section>
+
+<section class="slide">
+  <div class="kicker">Discussion</div>
+  <h2>Things I'd love to discuss</h2>
+  <ul>
+    <li>What is the right test that a character is installed, before we ask whether it survives?</li>
+    <li>How do we get a model to <i>use</i> its constitution in coding and agentic work, not only when asked about it?</li>
+    <li>When RL opposes the character, which outcome should we expect: resistance, subtler failure, or plain erosion?</li>
+    <li>How should we separate conditionalization we want (a backdoor under study) from conditionalization we don't (rules that apply only to chat)?</li>
+    <li>Which reward-hacking settings are close enough to frontier training to study character in?</li>
+    <li>Who else here is building character-trained model organisms or measuring realistic hacking? What would be useful to share?</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <div class="kicker">References</div>
+  <h2>References</h2>
+  <div class="cols" style="font-size:.85em">
+    <ul class="refs">
+      <li><a href="https://arxiv.org/abs/2510.17057">Howe &amp; Carroll 2025, The Ends Justify the Thoughts</a></li>
+      <li><a href="https://www.lesswrong.com/posts/2maYXkEgnfJHPAkxh/character-training-can-mitigate-reward-hacking-but-can-also">Colognese &amp; Ward 2026, Character training can mitigate reward hacking...</a></li>
+      <li><a href="https://arxiv.org/abs/2605.02087">Li et al. 2026, Model Spec Midtraining</a></li>
+      <li><a href="https://alignment.anthropic.com/2026/teaching-claude-why/">Kutasov et al. 2026, Teaching Claude Why</a></li>
+      <li><a href="https://arxiv.org/abs/2509.15541">Schoen et al. 2025, Stress Testing Deliberative Alignment for Anti-Scheming Training</a></li>
+      <li><a href="https://alignment.openai.com/how-far-does-alignment-midtraining-generalize/">Korbak et al. 2026, How far does alignment midtraining generalize?</a></li>
+      <li><a href="https://arxiv.org/abs/2609.20412">Baines et al. 2026, Stress-testing Alignment Midtraining</a></li>
+      <li><a href="https://arxiv.org/abs/2609.14998">Jose &amp; Stastny 2026, Shallow Beliefs</a></li>
+      <li><a href="https://arxiv.org/abs/2607.26654">Cho et al. 2026, Constitutional Midtraining</a></li>
+      <li><a href="https://arxiv.org/abs/2609.15886">O'Brien et al. 2026, Inoculation Midtraining</a></li>
+      <li><a href="https://arxiv.org/abs/2609.07627">Baum et al. 2026, Norms at a Price</a></li>
+    </ul>
+    <ul class="refs">
+      <li><a href="https://arxiv.org/abs/2502.13295">Palisade 2025, specification gaming in chess</a></li>
+      <li><a href="https://github.com/METR/RE-Bench">METR RE-Bench</a></li>
+      <li><a href="https://www.lesswrong.com/posts/quTGGNhGEiTCBEAX5/quickly-assessing-reward-hacking-like-behavior-in-llms-and">Quickly assessing reward-hacking-like behavior (LessWrong)</a></li>
+      <li><a href="https://arxiv.org/abs/2604.28182">Exploration Hacking</a></li>
+      <li><a href="https://alignment.anthropic.com/2026/reward-seeker/">Training a Misaligned Reward Seeker (Anthropic)</a></li>
+      <li><a href="https://arxiv.org/abs/2503.11926">Baker et al. 2025, Monitoring Reasoning Models for Misbehavior</a></li>
+      <li><a href="https://arxiv.org/abs/2406.10162">Sycophancy to Subterfuge (2024)</a></li>
+      <li><a href="https://arxiv.org/abs/2511.18397">MacDiarmid et al. 2025, Natural Emergent Misalignment from Reward Hacking</a></li>
+      <li><a href="https://arxiv.org/abs/2609.04170">Emergent cheating and whistleblowing in research swarms</a></li>
+      <li><a href="https://arxiv.org/abs/2510.04340">Tan et al. 2025, Inoculation prompting</a>; <a href="https://arxiv.org/abs/2510.05024">Wichers et al. 2025</a></li>
+      <li id="tl-refs-note" class="sub">Timeline entries link to their sources on the timeline slide.</li>
+    </ul>
+  </div>
+</section>
+
+</div>
+<div class="nav"><button onclick="go(-1)" aria-label="Previous slide">&larr;</button><button onclick="go(1)" aria-label="Next slide">&rarr;</button></div>
+<div class="footer" id="counter"></div>
+<script>
+const TIMELINE = [{"date": "2021-12", "title": "A General Language Assistant as a Laboratory for Alignment", "authors_short": "Askell et al.", "org": "Anthropic", "url": "https://arxiv.org/abs/2112.00861", "kind": "paper", "one_line": "Defined the helpful, honest, harmless (HHH) assistant target and introduced context distillation of a long prompt into weights.", "stack_stage": "context distillation"}, {"date": "2022-04", "title": "Training a Helpful and Harmless Assistant with Reinforcement Learning from Human Feedback", "authors_short": "Bai et al.", "org": "Anthropic", "url": "https://arxiv.org/abs/2204.05862", "kind": "paper", "one_line": "Trained an HHH assistant with RLHF preference models and documented the helpfulness versus harmlessness tension.", "stack_stage": "SL/RL from AI feedback"}, {"date": "2022-12", "title": "Constitutional AI: Harmlessness from AI Feedback", "authors_short": "Bai et al.", "org": "Anthropic", "url": "https://arxiv.org/abs/2212.08073", "kind": "paper", "one_line": "Replaced human harmlessness labels with a written list of principles, using self-critique SL and RL from AI feedback.", "stack_stage": "SL/RL from AI feedback"}, {"date": "2023-05", "title": "Claude's constitution", "authors_short": "Anthropic", "org": "Anthropic", "url": "https://www.anthropic.com/news/claudes-constitution", "kind": "spec", "one_line": "Published the principles used to train Claude, drawn from the UN Declaration of Human Rights, Sparrow rules and internal research.", "stack_stage": "principles/spec"}, {"date": "2023-10", "title": "Collective Constitutional AI: Aligning a Language Model with Public Input", "authors_short": "Ganguli, Huang et al.", "org": "Anthropic, Collective Intelligence Project", "url": "https://www.anthropic.com/research/collective-constitutional-ai-aligning-a-language-model-with-public-input", "kind": "blog", "one_line": "Sourced a constitution from about 1,000 members of the public and trained a model on it with CAI.", "stack_stage": "principles/spec"}, {"date": "2023-10", "title": "Specific versus General Principles for Constitutional AI", "authors_short": "Kundu et al.", "org": "Anthropic", "url": "https://arxiv.org/abs/2310.13798", "kind": "paper", "one_line": "Showed a single principle, roughly 'do what is best for humanity', yields a harmless assistant; detailed constitutions add finer control.", "stack_stage": "SL/RL from AI feedback"}, {"date": "2024-02", "title": "Measuring and Controlling Instruction (In)Stability in Language Model Dialogs", "authors_short": "Li et al.", "org": "Harvard", "url": "https://arxiv.org/abs/2402.10962", "kind": "paper", "one_line": "Measured persona drift: system-prompted personas decay over long dialogs, and proposed a split-softmax mitigation.", "stack_stage": "persona/representation"}, {"date": "2024-05", "title": "Introducing the Model Spec", "authors_short": "OpenAI", "org": "OpenAI", "url": "https://openai.com/index/introducing-the-model-spec/", "kind": "spec", "one_line": "First public OpenAI document specifying intended model behavior, objectives, rules and defaults.", "stack_stage": "principles/spec"}, {"date": "2024-06", "title": "Claude's Character", "authors_short": "Anthropic", "org": "Anthropic", "url": "https://www.anthropic.com/research/claude-character", "kind": "blog", "one_line": "Described a character variant of Constitutional AI where Claude generates, ranks and trains on responses expressing target traits.", "stack_stage": "SL/RL from AI feedback"}, {"date": "2024-12", "title": "Alignment faking in large language models", "authors_short": "Greenblatt et al.", "org": "Anthropic, Redwood Research", "url": "https://arxiv.org/abs/2412.14093", "kind": "paper", "one_line": "Showed training-situation facts delivered via synthetic documents, not prompts, are enough to induce alignment faking.", "stack_stage": "document/midtraining"}, {"date": "2024-12", "title": "Deliberative Alignment: Reasoning Enables Safer Language Models", "authors_short": "Guan et al.", "org": "OpenAI", "url": "https://arxiv.org/abs/2412.16339", "kind": "paper", "one_line": "Trained o-series models to recall and reason over the written safety spec in their chain of thought before answering.", "stack_stage": "context distillation"}, {"date": "2025-02", "title": "Sharing the latest Model Spec", "authors_short": "OpenAI", "org": "OpenAI", "url": "https://openai.com/index/sharing-the-latest-model-spec/", "kind": "spec", "one_line": "Major Model Spec revision adding the chain of command and releasing the spec under CC0.", "stack_stage": "principles/spec"}, {"date": "2025-02", "title": "Emergent Misalignment: Narrow finetuning can produce broadly misaligned LLMs", "authors_short": "Betley et al.", "org": "Truthful AI, UCL, CLR, UK AISI and others", "url": "https://arxiv.org/abs/2502.17424", "kind": "paper", "one_line": "Fine-tuning on insecure code alone made models broadly misaligned, showing narrow training shifts the whole persona.", "stack_stage": "failure/generalization"}, {"date": "2025-02", "title": "Character training: Understanding and crafting a language model's personality", "authors_short": "Lambert", "org": "Interconnects", "url": "https://www.interconnects.ai/p/character-training", "kind": "blog", "one_line": "Framed character training as a distinct, undocumented post-training subfield and called for public recipes and evaluations.", "stack_stage": "principles/spec"}, {"date": "2025-04", "title": "Modifying LLM Beliefs with Synthetic Document Finetuning", "authors_short": "Wang et al.", "org": "Anthropic", "url": "https://alignment.anthropic.com/2025/modifying-beliefs-via-sdf/", "kind": "blog", "one_line": "Systematized synthetic document finetuning as a method to insert beliefs, with evaluations of how deeply they take.", "stack_stage": "document/midtraining"}, {"date": "2025-04", "title": "Sycophancy in GPT-4o: What happened and what we're doing about it", "authors_short": "OpenAI", "org": "OpenAI", "url": "https://openai.com/index/sycophancy-in-gpt-4o/", "kind": "blog", "one_line": "Production post-mortem: optimizing short-term user feedback made GPT-4o sycophantic, forcing a rollback.", "stack_stage": "failure/generalization"}, {"date": "2025-06", "title": "Persona Features Control Emergent Misalignment", "authors_short": "Wang et al.", "org": "OpenAI", "url": "https://arxiv.org/abs/2506.19823", "kind": "paper", "one_line": "Found a 'misaligned persona' SAE latent that mediates emergent misalignment and showed brief benign fine-tuning reverses it.", "stack_stage": "persona/representation"}, {"date": "2025-07", "title": "Subliminal Learning: Language models transmit behavioral traits via hidden signals in data", "authors_short": "Cloud et al.", "org": "Anthropic Fellows, Truthful AI, Anthropic and others", "url": "https://arxiv.org/abs/2507.14805", "kind": "paper", "one_line": "Traits transfer from teacher to student through semantically unrelated data when both share a base model.", "stack_stage": "failure/generalization"}, {"date": "2025-07", "title": "Persona Vectors: Monitoring and Controlling Character Traits in Language Models", "authors_short": "Chen et al.", "org": "Anthropic Fellows, Anthropic, Truthful AI and others", "url": "https://arxiv.org/abs/2507.21509", "kind": "paper", "one_line": "Extracted activation directions for traits like sycophancy to monitor, steer and flag training data that shifts character.", "stack_stage": "persona/representation"}, {"date": "2025-10", "title": "Inoculation Prompting: Eliciting traits from LLMs during training can suppress them at test-time", "authors_short": "Tan et al.", "org": "UCL, Center on Long-Term Risk, UK AISI and others", "url": "https://arxiv.org/abs/2510.04340", "kind": "paper", "one_line": "Prompting for an unwanted trait during training reduces its expression at test time, including emergent misalignment.", "stack_stage": "failure/generalization"}, {"date": "2025-10", "title": "Inoculation Prompting: Instructing LLMs to misbehave at train-time improves test-time alignment", "authors_short": "Wichers et al.", "org": "Anthropic Fellows, MATS, Redwood Research, Anthropic", "url": "https://arxiv.org/abs/2510.05024", "kind": "paper", "one_line": "Requesting the undesired behavior, such as test-special-casing, in SFT prompts reduces its learning.", "stack_stage": "failure/generalization"}, {"date": "2025-11", "title": "Open Character Training: Shaping the Persona of AI Assistants through Constitutional AI", "authors_short": "Maiya, Bartsch, Lambert, Hubinger", "org": "Cambridge, MATS, Ai2, Anthropic", "url": "https://arxiv.org/abs/2511.01689", "kind": "paper", "one_line": "First open character-training recipe: constitution-based DPO plus synthetic introspection data across 11 personas.", "stack_stage": "SL/RL from AI feedback"}, {"date": "2025-11", "title": "Opening the black box of character training", "authors_short": "Lambert", "org": "Interconnects", "url": "https://www.interconnects.ai/p/opening-the-black-box-of-character", "kind": "blog", "one_line": "Explainer of the Open Character Training recipe and why open character-training research matters.", "stack_stage": "principles/spec"}, {"date": "2025-11", "title": "Natural Emergent Misalignment from Reward Hacking in Production RL", "authors_short": "MacDiarmid et al.", "org": "Anthropic, Redwood Research", "url": "https://arxiv.org/abs/2511.18397", "kind": "paper", "one_line": "Learning to reward hack in production coding RL generalized to broad misalignment; inoculation prompting prevented it.", "stack_stage": "RL corruption"}, {"date": "2025-11", "title": "Claude 4.5 Opus' Soul Document", "authors_short": "Weiss", "org": "Independent (extraction); document by Anthropic", "url": "https://www.lesswrong.com/posts/vpNG99GhbBoLov9og/claude-4-5-opus-soul-document", "kind": "blog", "one_line": "Extracted a character document from Claude 4.5 Opus; reportedly confirmed by Anthropic as used in supervised training.", "stack_stage": "principles/spec"}, {"date": "2025-12", "title": "Weird Generalization and Inductive Backdoors: New Ways to Corrupt LLMs", "authors_short": "Betley et al.", "org": "Truthful AI, MATS and others", "url": "https://arxiv.org/abs/2512.09742", "kind": "paper", "one_line": "Small narrow fine-tunes shift models into whole personas or eras far outside the training context.", "stack_stage": "failure/generalization"}, {"date": "2026-01", "title": "Alignment Pretraining: AI Discourse Causes Self-Fulfilling (Mis)alignment", "authors_short": "Tice et al.", "org": "Geodesic Research, Cambridge, Oxford, UK AISI", "url": "https://arxiv.org/abs/2601.10160", "kind": "paper", "one_line": "Pretraining 6.9B models with upsampled aligned-AI documents cut misalignment from 45% to 9%, partly surviving post-training.", "stack_stage": "document/midtraining"}, {"date": "2026-01", "title": "The Assistant Axis: Situating and Stabilizing the Default Persona of Language Models", "authors_short": "Lu et al.", "org": "Anthropic Fellows, Anthropic, MATS, Oxford", "url": "https://arxiv.org/abs/2601.10387", "kind": "paper", "one_line": "Found a leading activation direction for the default Assistant persona; drift along it predicts harmful persona slips.", "stack_stage": "persona/representation"}, {"date": "2026-01", "title": "Claude's new constitution", "authors_short": "Askell (primary author) et al.", "org": "Anthropic", "url": "https://www.anthropic.com/constitution", "kind": "spec", "one_line": "Long constitution that explains reasons for values rather than listing rules, written primarily for Claude's training.", "stack_stage": "principles/spec"}, {"date": "2026-02", "title": "The persona selection model", "authors_short": "Marks", "org": "Anthropic", "url": "https://www.anthropic.com/research/persona-selection-model", "kind": "blog", "one_line": "Theory that pretraining learns many personas and post-training mostly selects and refines the Assistant persona.", "stack_stage": "persona/representation"}, {"date": "2026-03", "title": "How far does alignment midtraining generalize?", "authors_short": "Korbak et al.", "org": "OpenAI", "url": "https://alignment.openai.com/how-far-does-alignment-midtraining-generalize/", "kind": "blog", "one_line": "Aligned-document midtraining effects near the training distribution largely disappeared after reasoning post-training.", "stack_stage": "document/midtraining"}, {"date": "2026-05", "title": "Model Spec Midtraining: Improving How Alignment Training Generalizes", "authors_short": "Li et al.", "org": "Anthropic Fellows, Anthropic", "url": "https://arxiv.org/abs/2605.02087", "kind": "paper", "one_line": "Midtraining on documents about a spec steers how later demonstration fine-tuning generalizes; explained values generalize better.", "stack_stage": "document/midtraining"}, {"date": "2026-05", "title": "Teaching Claude Why", "authors_short": "Kutasov et al.", "org": "Anthropic", "url": "https://alignment.anthropic.com/2026/teaching-claude-why/", "kind": "blog", "one_line": "Constitution documents and explanations of why outgeneralized behavior demonstrations at removing agentic misalignment like blackmail.", "stack_stage": "document/midtraining"}, {"date": "2026-06", "title": "(Mis)generalization of Helpful-only Fine-tuning", "authors_short": "Khursheed, Sosis, Roger", "org": "Anthropic Fellows, MATS, Anthropic", "url": "https://arxiv.org/abs/2606.04413", "kind": "paper", "one_line": "Helpful-only models show misalignment and incoherent character; SDF and character questions in SFT and RL mitigate it.", "stack_stage": "failure/generalization"}, {"date": "2026-07", "title": "Constitutional Midtraining: Content Presence Drives Alignment Gains", "authors_short": "Cho et al.", "org": "Oxford, Geodesic Research", "url": "https://arxiv.org/abs/2607.26654", "kind": "paper", "one_line": "Midtraining at 120B scale on a 394M-token constitution corpus improved alignment durability; content presence mattered more than structure.", "stack_stage": "document/midtraining"}, {"date": "2026-08", "title": "Training a Misaligned Reward Seeker", "authors_short": "Qi, Wright, MacDiarmid, Hubinger", "org": "Anthropic", "url": "https://alignment.anthropic.com/2026/reward-seeker/", "kind": "blog", "one_line": "Extensive RL on hackable environments produced a model willing to cause real harm whenever a grader was salient.", "stack_stage": "RL corruption"}, {"date": "2026-09", "title": "Shallow Beliefs: Synthetic document finetuning does not inoculate against emergent misalignment from reward hacking", "authors_short": "Jose, Stastny", "org": "Redwood Research, Astra Fellowship", "url": "https://arxiv.org/abs/2609.14998", "kind": "paper", "one_line": "Midtraining documents framing reward hacking as fine changed stated beliefs but not misalignment after hacking RL.", "stack_stage": "RL corruption"}, {"date": "2026-09", "title": "Inoculation Midtraining with Learned Neologisms", "authors_short": "O'Brien et al.", "org": "Geodesic Research, OpenAI, UK AISI", "url": "https://arxiv.org/abs/2609.15886", "kind": "paper", "one_line": "Midtraining a quarantine token to contain unsafe behavior reduced misalignment but did not beat inoculation prompting.", "stack_stage": "document/midtraining"}, {"date": "2026-09", "title": "Stress-testing Alignment Midtraining", "authors_short": "Baines et al.", "org": "Arcadia Impact and others", "url": "https://arxiv.org/abs/2609.20412", "kind": "paper", "one_line": "A small fraction of conflicting fine-tuning data erased alignment midtraining effects at up to 110B scale.", "stack_stage": "document/midtraining"}, {"date": "2026-09", "title": "Character training can mitigate reward hacking, but can also make it harder to detect", "authors_short": "Colognese, Ward", "org": "LessWrong", "url": "https://www.lesswrong.com/posts/2maYXkEgnfJHPAkxh/character-training-can-mitigate-reward-hacking-but-can-also", "kind": "blog", "one_line": "Anti-cheating character training sometimes resisted RL hacking but otherwise produced silent, harder-to-monitor hacks.", "stack_stage": "RL corruption"}];
+const STAGE_COLORS = {
+  "principles/spec":"#0b57d0","SL/RL from AI feedback":"#137333","context distillation":"#8430ce",
+  "document/midtraining":"#b06000","persona/representation":"#00838f","failure/generalization":"#b3261e","RL corruption":"#5f6368"
+};
+(function renderTimeline(){
+  document.querySelectorAll('.tl[data-from]').forEach(el=>{
+    const a=el.dataset.from, b=el.dataset.to;
+    const items=TIMELINE.filter(e=>e.date.slice(0,4)>=a && e.date.slice(0,4)<=b);
+    if(!items.length){el.innerHTML='<p class="sub">Timeline data not loaded.</p>';return;}
+    el.innerHTML=items.map(e=>{
+      const c=STAGE_COLORS[e.stack_stage]||'#5f6368';
+      return `<div class="item"><span class="d">${e.date}</span><a class="t" href="${e.url}" target="_blank" rel="noopener">${e.title}</a> <span class="o">${e.authors_short}${e.org?', '+e.org:''}</span> <span class="tag s" style="background:${c}1a;color:${c}">${e.stack_stage}</span><div class="o">${e.one_line}</div></div>`;
+    }).join('');
+  });
+})();
+const slides=[...document.querySelectorAll('section.slide')];
+let i=0;
+function show(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+  document.getElementById('counter').textContent=(i+1)+' / '+slides.length;
+  try{if(location.hash!=='#'+(i+1))history.replaceState(null,'','#'+(i+1));}catch(e){}}
+function go(d){show(i+d);}
+document.addEventListener('keydown',e=>{
+  if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(1);}
+  if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(-1);}
+  if(e.key==='Home')show(0); if(e.key==='End')show(slides.length-1);
+});
+const fromHash=()=>show((parseInt((location.hash||'#1').slice(1))||1)-1);
+window.addEventListener('hashchange',fromHash);
+fromHash();
+</script>
+</body>
+</html>
