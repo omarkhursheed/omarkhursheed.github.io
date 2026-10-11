@@ -28,16 +28,16 @@ layout: default
       <div class="pub-year">2026</div>
       <div class="pub-content">
         <h3>(Mis)generalization of Helpful-only Fine-tuning</h3>
-        <p class="pub-meta"><strong>Khursheed*</strong>, Sosis*, Roger &middot; arXiv</p>
+        <p class="pub-meta"><strong>Khursheed*</strong>, Sosis*, Roger &middot; NeurIPS</p>
       </div>
     </a>
-    <div class="pub-item pub-item-static">
+    <a href="https://arxiv.org/abs/2608.30485" class="pub-item" target="_blank" rel="noopener">
       <div class="pub-year">2026</div>
       <div class="pub-content">
-        <h3>Two Centuries of Women’s Voices: Computational Analysis of Gender Participation and Suffrage Debates in British Parliament</h3>
-        <p class="pub-meta"><strong>Khursheed*</strong>, Sawkar*, KhudaBukhsh &middot; Under review</p>
+        <h3>Two Centuries of Sexism in British Parliament: A Computational Analysis of Women's Representation in the Hansard Corpus</h3>
+        <p class="pub-meta"><strong>Khursheed*</strong>, Sawkar*, KhudaBukhsh &middot; EMNLP</p>
       </div>
-    </div>
+    </a>
     <a href="https://arxiv.org/abs/2304.12183" class="pub-item" target="_blank" rel="noopener">
       <div class="pub-year">2023</div>
       <div class="pub-content">

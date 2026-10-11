@@ -7,12 +7,12 @@ permalink: /publications
 ## 2026
 **[(Mis)generalization of Helpful-only Fine-tuning](https://arxiv.org/abs/2606.04413)**<br>
 **Khursheed MO***, Sosis B*, Roger F<br>
-*arXiv preprint*<br>
+*NeurIPS 2026*<br>
 Studies the alignment properties of helpful-only fine-tuning and mitigations for undesirable generalization.
 
-**Two Centuries of Women’s Voices: Computational Analysis of Gender Participation and Suffrage Debates in British Parliament**<br>
+**[Two Centuries of Sexism in British Parliament: A Computational Analysis of Women's Representation in the Hansard Corpus](https://arxiv.org/abs/2608.30485)**<br>
 **Khursheed MO***, Sawkar M*, KhudaBukhsh AR<br>
-*Under review*<br>
+*EMNLP 2026*<br>
 Analyzes gender participation and suffrage debates across two centuries of UK parliamentary speech.
 
 ## 2023
