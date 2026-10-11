@@ -8,7 +8,7 @@ layout: default
   </div>
   <div class="hero-content">
     <h1>Omar Khursheed</h1>
-    <p class="hero-role">MATS Research Scholar</p>
+    <p class="hero-role">MATS Research Fellow</p>
     <p class="hero-bio">
       I study the behavior and alignment of large language models by training model organisms that demonstrate various forms of misalignment and developing training and inference-time mitigations.
     </p>
@@ -16,7 +16,7 @@ layout: default
       I grew up in Saudi Arabia and studied computer engineering at Aligarh Muslim University in India. I completed an MS in computer science at UMass Amherst, where I worked with <a href="https://people.cs.umass.edu/~miyyer/">Mohit Iyyer</a> and <a href="https://brenocon.com/">Brendan O'Connor</a> on <a href="https://aclanthology.org/2020.nlpcss-1.23/">gender bias in narrative tropes</a>.
     </p>
     <p class="hero-bio">
-      From 2021 to 2025, I was an Applied Scientist on Amazon's Alexa Edge AI team, working on wakeword detection and device-directedness. During the first half of 2026, I was an Anthropic AI Safety Fellow, working with Fabien Roger on the alignment properties of <a href="https://arxiv.org/abs/2606.04413">helpful-only models</a>. I am currently a research scholar at <a href="https://www.matsprogram.org/">MATS</a>.
+      From 2021 to 2025, I was an Applied Scientist on Amazon's Alexa Edge AI team, working on wakeword detection and device-directedness. During the first half of 2026, I was an Anthropic AI Safety Fellow, working with Fabien Roger on the alignment properties of <a href="https://arxiv.org/abs/2606.04413">helpful-only models</a>. I am currently a research fellow at <a href="https://www.matsprogram.org/">MATS</a>.
     </p>
   </div>
 </section>
